@@ -8,6 +8,6 @@ module.exports = {
   },
 
   afterInstall: function(options) {
-    return this.addBowerPackageToProject('vis', '^4.16.0');
+    return this.addBowerPackageToProject('vis', '^4.20.0');
   }
 };
