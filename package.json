@@ -48,7 +48,7 @@
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
     "ember-cli-node-assets": "^0.2.2",
-    "vis": "^4.20.0"
+    "vis": "tenders-exposed/vis#fix/join-clustered-edges"
   },
   "keywords": [
     "graph",

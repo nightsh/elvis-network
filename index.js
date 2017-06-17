@@ -10,6 +10,11 @@ module.exports = {
           srcDir: 'dist',
           destDir: 'vis',
           include: ['vis.js', 'vis.css'],
+        },
+        public: {
+          srcDir: 'dist',
+          destDir: 'vis',
+          include: ['img']
         }
       }
     }
