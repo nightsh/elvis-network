@@ -104,6 +104,26 @@ export default Ember.Component.extend(ContainerMixin, {
       this.attrs.stabilizationProgressAction(e);
     });
 
+    network.on('resize', (e) => {
+      this.attrs.resizeAction(e);
+    });
+
+    network.on('initRedraw', (e) => {
+      this.attrs.initRedrawAction(e);
+    });
+
+    network.on('beforeDrawing', (e) => {
+      this.attrs.beforeDrawingAction(e);
+    });
+
+    network.on('afterDrawing', (e) => {
+      this.attrs.afterDrawingAction(e);
+    });
+
+    network.on('configChange', (e) => {
+      this.attrs.configChangeAction(e);
+    });
+
     this.set('network', network);
     this.set('storeAs', this);
     this.setupBackgroundImage();
