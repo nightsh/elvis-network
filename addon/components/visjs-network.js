@@ -9,7 +9,19 @@ const { A, assert, debug } = Ember;
 export default Ember.Component.extend(ContainerMixin, {
   layout,
   classNames: ['ember-cli-visjs ember-cli-visjs-network elvis-network'],
-
+  // The following is a list of methods that simply correspond to events
+  // (e.g. the `resize` event will have a `resizeAction` method handling it)
+  eventActions: [
+    'startStabilizing',
+    'stabilizationIterationsDone',
+    'stabilized',
+    'stabilizationProgress',
+    'resize',
+    'initRedraw',
+    'beforeDrawing',
+    'afterDrawing',
+    'configChange'
+  ],
   network: false,
 
   init() {
@@ -88,40 +100,15 @@ export default Ember.Component.extend(ContainerMixin, {
       });
     });
 
-    network.on('startStabilizing', ( ) => {
-      this.attrs.startStabilizingAction();
-    });
-
-    network.on('stabilizationIterationsDone', ( ) => {
-      this.attrs.stabilizationIterationsDoneAction();
-    });
-
-    network.on('stabilized', (e) => {
-      this.attrs.stabilizedAction(e);
-    });
-
-    network.on('stabilizationProgress', (e) => {
-      this.attrs.stabilizationProgressAction(e);
-    });
-
-    network.on('resize', (e) => {
-      this.attrs.resizeAction(e);
-    });
-
-    network.on('initRedraw', (e) => {
-      this.attrs.initRedrawAction(e);
-    });
-
-    network.on('beforeDrawing', (e) => {
-      this.attrs.beforeDrawingAction(e);
-    });
-
-    network.on('afterDrawing', (e) => {
-      this.attrs.afterDrawingAction(e);
-    });
-
-    network.on('configChange', (e) => {
-      this.attrs.configChangeAction(e);
+    // Here we map through all the event-action pairs we have and define each
+    // action as a listener for that event (e.g. `resize` -> `resizeAction`)
+    this.eventActions.map((event) => {
+      network.on(`${event}`, (e) => {
+        let action = this.attrs[`${event}Action`];
+        if (typeof action === 'function') {
+          action(e);
+        }
+      });
     });
 
     this.set('network', network);
